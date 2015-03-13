@@ -1,1 +1,0 @@
-/Users/chietala/workspace/broccoli-fs/tests/fixtures/app/lib/bar.js
