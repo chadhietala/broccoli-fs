@@ -1,0 +1,29 @@
+{
+  "name": "broccoli-fs",
+  "version": "0.0.0",
+  "description": "Broccoli Virtual FileSystem",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/unit/*-test.js"
+  },
+  "keywords": [
+    "broccoli",
+    "broccolijs"
+  ],
+  "author": "Chad Hietala",
+  "license": "ISC",
+  "dependencies": {
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-stew": "^0.2.1",
+    "resolve": "^1.1.5"
+  },
+  "devDependencies": {
+    "broccoli": "^0.15.0",
+    "broccoli-test-helpers": "0.0.3",
+    "chai": "^2.1.1",
+    "core-object": "^1.1.0",
+    "mocha": "^2.2.1",
+    "rsvp": "^3.0.17",
+    "walk-sync": "^0.1.3"
+  }
+}
