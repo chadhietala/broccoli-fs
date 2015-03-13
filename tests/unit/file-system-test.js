@@ -112,5 +112,38 @@ describe('Broccoli File System', function() {
          expect(files).to.deep.equal([]);
       });
     });
+
+    it('should be able to remove multiple files', function() {
+      bfs.add('lib');
+      bfs.add('src');
+      bfs.remove('lib/bar.js', 'src/config/development.js');
+      return inspectFs(bfs.fs).then(function(files) {
+         expect(files).to.deep.equal([
+            'src/',
+            'src/config/',
+            'src/config/production.js',
+            'src/controller/',
+            'src/controller/baz.js'
+          ]);
+      });
+    });
+  });
+
+  describe('move', function() {
+    it('should move directories', function() {
+      bfs.add('src');
+      bfs.move('/', 'development');
+      return inspectFs(bfs.fs).then(function(files) {
+        expect(files).to.deep.equal([
+          'development/',
+          'development/src/',
+          'development/src/config/',
+          'development/src/config/development.js',
+          'development/src/config/production.js',
+          'development/src/controller/',
+          'development/src/controller/baz.js'
+        ]);
+      });
+    });
   });
 });

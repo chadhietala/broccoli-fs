@@ -13,6 +13,7 @@
   "author": "Chad Hietala",
   "license": "ISC",
   "dependencies": {
+    "broccoli-funnel": "^0.2.2",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-stew": "^0.2.1",
     "resolve": "^1.1.5"
