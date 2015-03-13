@@ -30,32 +30,32 @@ function cleanupBuilder() {
 }
 
 describe('Broccoli File System', function() {
+  var bfs;
+
+  beforeEach(function() {
+    bfs = new BroccoliFileSystem();
+    process.chdir('./tests/fixtures/app');
+  });
+
+  afterEach(function() {
+    return cleanupBuilder();
+  });
+
   describe('add', function() {
-    var bfs;
-
-    beforeEach(function() {
-      bfs = new BroccoliFileSystem();
-      process.chdir('./tests/fixtures/app');
-    });
-
-    afterEach(function() {
-      return cleanupBuilder();
-    });
-
     it('can a single file to the system', function() {
       bfs.add('lib', {
         include: ['bar.js']
       });
       return inspectFs(bfs.fs).then(function(files) {
         expect(files).to.deep.equal([
-          'development/',
-          'development/lib/',
-          'development/lib/bar.js'
+          'lib/',
+          'lib/bar.js'
         ]);
       });    
     });
 
     it('can add multiple files to the system', function() {
+
       bfs.add('lib', {
         include: ['bar.js']
       });
@@ -64,17 +64,17 @@ describe('Broccoli File System', function() {
 
       return inspectFs(bfs.fs).then(function(files) {
         expect(files).to.deep.equal([
-          'development/',
-          'development/lib/',
-          'development/lib/bar.js',
-          'development/src/',
-          'development/src/controller/',
-          'development/src/controller/baz.js'
+          'lib/',
+          'lib/bar.js',
+          'src/',
+          'src/controller/',
+          'src/controller/baz.js'
         ]);
       });    
     });
 
     it('can add env specific files', function() {
+
       bfs.add('src/config', {
         include: {
           'development': 'development.js',
@@ -94,6 +94,23 @@ describe('Broccoli File System', function() {
           'production/src/config/production.js'
         ]);
       });    
+    });
+  });
+
+  describe('remove', function() {
+    it('should throw if the fs is empty', function() {
+      var willThrow = function() {
+        return bfs.remove('foo.js');
+      };
+      expect(willThrow).to.throw(/The file system is empty\./);
+    });
+
+    it('should remove all bar files from the fs', function() {
+      bfs.add('lib');
+      bfs.remove('lib/bar.js');
+      return inspectFs(bfs.fs).then(function(files) {
+         expect(files).to.deep.equal([]);
+      });
     });
   });
 });
