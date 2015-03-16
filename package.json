@@ -11,7 +11,7 @@
     "broccolijs"
   ],
   "author": "Chad Hietala",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "broccoli-funnel": "^0.2.2",
     "broccoli-merge-trees": "^0.2.1",
