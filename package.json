@@ -2,7 +2,7 @@
   "name": "broccoli-fs",
   "version": "0.0.0",
   "description": "Broccoli Virtual FileSystem",
-  "main": "index.js",
+  "main": "lib/file-system.js",
   "scripts": {
     "test": "mocha tests/unit/*-test.js"
   },

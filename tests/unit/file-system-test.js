@@ -97,26 +97,26 @@ describe('Broccoli File System', function() {
     });
   });
 
-  describe('remove', function() {
+  describe('rm', function() {
     it('should throw if the fs is empty', function() {
       var willThrow = function() {
-        return bfs.remove('foo.js');
+        return bfs.rm('foo.js');
       };
       expect(willThrow).to.throw(/The file system is empty\./);
     });
 
-    it('should remove all bar files from the fs', function() {
+    it('should rm all bar files from the fs', function() {
       bfs.add('lib');
-      bfs.remove('lib/bar.js');
+      bfs.rm('lib/bar.js');
       return inspectFs(bfs.fs).then(function(files) {
          expect(files).to.deep.equal([]);
       });
     });
 
-    it('should be able to remove multiple files', function() {
+    it('should be able to rm multiple files', function() {
       bfs.add('lib');
       bfs.add('src');
-      bfs.remove('lib/bar.js', 'src/config/development.js');
+      bfs.rm('lib/bar.js', 'src/config/development.js');
       return inspectFs(bfs.fs).then(function(files) {
          expect(files).to.deep.equal([
             'src/',
@@ -129,10 +129,10 @@ describe('Broccoli File System', function() {
     });
   });
 
-  describe('move', function() {
-    it('should move directories', function() {
+  describe('mv', function() {
+    it('should mv directories', function() {
       bfs.add('src');
-      bfs.move('/', 'development');
+      bfs.mv('/', 'development/');
       return inspectFs(bfs.fs).then(function(files) {
         expect(files).to.deep.equal([
           'development/',
@@ -145,5 +145,37 @@ describe('Broccoli File System', function() {
         ]);
       });
     });
+
+    it('should mv files', function() {
+      bfs.add('src');
+      bfs.mv('src/config/development.js', 'src/config/moo.js');
+      return inspectFs(bfs.fs).then(function(files) {
+        expect(files).to.deep.equal([
+          'src/',
+          'src/config/',
+          'src/config/moo.js',
+          'src/config/production.js',
+          'src/controller/',
+          'src/controller/baz.js'
+        ]);
+      });
+    });
+
+    it('should mv globs', function() {
+      bfs.add('src');
+      bfs.mv('src/config/*.js', 'configs/');
+      return inspectFs(bfs.fs).then(function(files) {
+        expect(files).to.deep.equal([
+          'configs/',
+          'configs/development.js',
+          'configs/production.js',
+          'src/',
+          'src/controller/',
+          'src/controller/baz.js'
+        ]);
+      });
+    });
+
+
   });
 });
