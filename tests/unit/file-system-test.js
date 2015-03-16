@@ -73,6 +73,21 @@ describe('Broccoli File System', function() {
       });    
     });
 
+    it('can add globs of files', function() {
+      bfs.add('src/**/*.js');
+
+      return inspectFs(bfs.fs).then(function(files) {
+        expect(files).to.deep.equal([
+            'src/',
+            'src/config/',
+            'src/config/development.js',
+            'src/config/production.js',
+            'src/controller/',
+            'src/controller/baz.js'
+        ]);
+      });
+    });
+
     it('can add env specific files', function() {
 
       bfs.add('src/config', {
